@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021-07-20
  **/
 @RestController
-@RequestMapping("/")
 @RequiredArgsConstructor
+@RequestMapping("/user-service")
 public class UserController {
 
 	private final Environment env;
