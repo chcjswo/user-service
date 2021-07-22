@@ -1,6 +1,7 @@
 package com.mocadev.userservice.service;
 
 import com.mocadev.userservice.dto.UserDto;
+import com.mocadev.userservice.repository.UserEntity;
 
 /**
  * @author chcjswo
@@ -12,5 +13,9 @@ import com.mocadev.userservice.dto.UserDto;
 public interface UserService {
 
 	UserDto createUser(UserDto userDto);
+
+	UserDto getUserByUserId(String userId);
+
+	Iterable<UserEntity> getUserByAll();
 
 }

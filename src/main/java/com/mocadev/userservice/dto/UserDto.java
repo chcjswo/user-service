@@ -1,6 +1,8 @@
 package com.mocadev.userservice.dto;
 
+import com.mocadev.userservice.vo.ResponseOrder;
 import java.util.Date;
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -18,7 +20,7 @@ public class UserDto {
 	private String pwd;
 	private String userId;
 	private Date createdAt;
-
 	private String encryptedPwd;
+	private List<ResponseOrder> orders;
 
 }
