@@ -5,6 +5,7 @@ import com.mocadev.userservice.repository.UserEntity;
 import com.mocadev.userservice.repository.UserRepository;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
 		userRepository.save(userEntity);
 
-		return null;
+		return mapper.map(userDto, UserDto.class);
 	}
 
 }

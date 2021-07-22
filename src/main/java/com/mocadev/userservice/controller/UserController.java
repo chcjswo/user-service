@@ -4,6 +4,7 @@ import com.mocadev.userservice.dto.UserDto;
 import com.mocadev.userservice.service.UserService;
 import com.mocadev.userservice.vo.Greeting;
 import com.mocadev.userservice.vo.RequestUser;
+import com.mocadev.userservice.vo.ResponseUser;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -48,14 +49,14 @@ public class UserController {
 	}
 
 	@PostMapping("/users")
-	public ResponseEntity createUser(@RequestBody RequestUser requestUser) {
+	public ResponseEntity<ResponseUser> createUser(@RequestBody RequestUser requestUser) {
 		ModelMapper mapper = new ModelMapper();
 		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		UserDto userDto = mapper.map(requestUser, UserDto.class);
-
 		userService.createUser(userDto);
+		ResponseUser responseUser = mapper.map(userDto, ResponseUser.class);
 
-		return new ResponseEntity(HttpStatus.CREATED);
+		return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
 	}
 
 }
