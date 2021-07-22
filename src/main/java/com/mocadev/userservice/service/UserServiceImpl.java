@@ -5,9 +5,9 @@ import com.mocadev.userservice.repository.UserEntity;
 import com.mocadev.userservice.repository.UserRepository;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepository;
+	private final BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
 		ModelMapper mapper = new ModelMapper();
 		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		UserEntity userEntity = mapper.map(userDto, UserEntity.class);
-		userEntity.setEncryptedPwd("encrypted_password");
+		userEntity.setEncryptedPwd(passwordEncoder.encode(userDto.getPwd()));
 
 		userRepository.save(userEntity);
 
