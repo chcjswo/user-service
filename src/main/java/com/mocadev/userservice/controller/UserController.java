@@ -69,9 +69,7 @@ public class UserController {
 		List<ResponseUser> result = new ArrayList<>();
 		ModelMapper mapper = new ModelMapper();
 
-		users.forEach(v -> {
-			result.add(mapper.map(v, ResponseUser.class));
-		});
+		users.forEach(v -> result.add(mapper.map(v, ResponseUser.class)));
 
 		return ResponseEntity.status(HttpStatus.OK).body(result);
 	}
