@@ -2,6 +2,7 @@ package com.mocadev.userservice.service;
 
 import com.mocadev.userservice.dto.UserDto;
 import com.mocadev.userservice.repository.UserEntity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * @author chcjswo
@@ -10,7 +11,7 @@ import com.mocadev.userservice.repository.UserEntity;
  * @github https://github.com/chcjswo
  * @since 2021-07-21
  **/
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
 	UserDto createUser(UserDto userDto);
 
