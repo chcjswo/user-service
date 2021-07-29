@@ -4,8 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mocadev.userservice.dto.UserDto;
 import com.mocadev.userservice.service.UserService;
 import com.mocadev.userservice.vo.RequestLogin;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Objects;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -63,6 +67,16 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		throws IOException, ServletException {
 		String username = ((User) authResult.getPrincipal()).getUsername();
 		UserDto userDetails = userService.getUserDetailByEmail(username);
+
+		String token = Jwts.builder()
+			.setSubject(userDetails.getUserId())
+			.setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(
+				Objects.requireNonNull(env.getProperty("token.expiration_time")))))
+			.signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret"))
+			.compact();
+
+		response.addHeader("token", token);
+		response.addHeader("userId", userDetails.getUserId());
 	}
 
 }
